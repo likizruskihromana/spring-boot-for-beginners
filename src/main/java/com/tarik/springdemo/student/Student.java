@@ -1,12 +1,22 @@
 package com.tarik.springdemo.student;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.Period;
+
+@Entity
+@Table(name="studnet")
 public class Student {
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String firstname;
     private String lastname;
     private LocalDate dateOfBirth;
+    @Column(unique = true)
     private String email;
+    @Transient
     private int age;
     public Student() {
     }
@@ -42,9 +52,15 @@ public class Student {
         this.email = email;
     }
     public int getAge() {
-        return age;
+        return Period.between(dateOfBirth,LocalDate.now()).getYears();
     }
     public void setAge(int age) {
         this.age = age;
+    }
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
